@@ -1,3 +1,5 @@
+# config module
+
 from ._config_class import Config
 from ._logging import get_logger
 from ._testing_config import get_config as get_test_config
