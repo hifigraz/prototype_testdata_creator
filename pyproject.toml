@@ -8,9 +8,9 @@ requires = [
 [project]
 authors = [ { name = "Robert Ulmer", email = "rulmer@lr.htlweiz.at" } ]
 
-name = "CMDLINE_NAME_PLACEHOLDER"
+name = "testdata_creator"
 version = "0.0.1"
-description = "Cmdline description:"
+description = "creat testdata:"
 readme = "README.md"
 requires-python = ">3.13,<4.0"
 license = "GPL-3.0-or-later"
@@ -30,24 +30,29 @@ classifiers = [
 ]
 
 dependencies = [
+  "sqlalchemy",
+  "faker",
+
 ]
 
 [project.scripts]
-CMDLINE_NAME_PLACEHOLDER_test = "CMDLINE_NAME_PLACEHOLDER.utils:test"
+testdata_creator_test = "testdata_creator.utils:test"
+data_generator = "testdata_creator.utils:generator_main"
 
 [project.urls]
-"Homepage" = "https://CMDLINE_NAME_PLACEHOLDER.com"
-"Documentation" = "https://CMDLINE_NAME_PLACEHOLDER.com"
+"Homepage" = "https://testdata_creator.com"
+"Documentation" = "https://testdata_creator.com"
 
 [project.optional-dependencies]
 lint = [
-    "black",
-    "codespell>=2.2.4",
-    "isort",
-    "ruff",
-    "tomli",
-    "validate-pyproject[all]",
-    "vulture",
+  "black",
+  "codespell>=2.2.4",
+  "isort",
+  "ruff",
+  "tomli",
+  "validate-pyproject[all]",
+  "vulture",
+  "flake8",
 ]
 
 test = [
