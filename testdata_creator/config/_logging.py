@@ -5,7 +5,7 @@ logging.basicConfig(
 )
 
 
-def get_logger(name=__name__, debug=False):
+def get_logger(name: str = __name__, debug: bool = False):
     logger = logging.getLogger(name)
 
     if debug:

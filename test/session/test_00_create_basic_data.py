@@ -1,45 +1,16 @@
+from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-import testdata_creator.config
-import testdata_creator.engine
 import testdata_creator.model
 
-
-def _create_engine():
-    return testdata_creator.engine.create_engine(
-        testdata_creator.config.get_test_config().connection_string
-    )
-
-
-def _create_person(session: Session, first_name: str, last_name: str):
-    person = testdata_creator.model.Person()
-    person.first_name = first_name
-    person.last_name = last_name
-    session.add(person)
-    session.commit
-    return person
-
-
-def _create_group(
-    session: Session, name: str, persons: list[testdata_creator.model.Person]
-):
-    group = testdata_creator.model.Group()
-    group.name = name
-    for person in persons:
-        a = testdata_creator.model.PersonGroupAssociation()
-        a.person = person
-        group.person_associations.append(a)
-        session.add(a)
-    session.add(group)
-    session.commit()
-    return group
+from ._helper import create_engine, create_person, create_group, create_deal
 
 
 def test_00_create_person():
-    engine = _create_engine()
+    engine = create_engine()
     with Session(engine) as session:
-        _ = _create_person(session, "John", "Smith")
+        _ = create_person(session, "John", "Smith")
 
         stmt = select(testdata_creator.model.Person)
         for person in session.scalars(stmt):
@@ -49,13 +20,13 @@ def test_00_create_person():
 
 
 def test_01_create_persons_and_groups():
-    engine = _create_engine()
+    engine = create_engine()
     with Session(bind=engine) as session:
-        john = _create_person(session, first_name="John", last_name="Smith")
-        jane = _create_person(session, first_name="Jane", last_name="Smith")
+        john = create_person(session, first_name="John", last_name="Smith")
+        jane = create_person(session, first_name="Jane", last_name="Smith")
 
-        users = _create_group(session, "USERS", [john, jane])
-        admins = _create_group(session, "ADMINS", [jane])
+        users = create_group(session, "USERS", [john, jane])
+        admins = create_group(session, "ADMINS", [jane])
 
         assert len(users.person_associations) == 2
         assert len(admins.person_associations) == 1
@@ -81,3 +52,21 @@ def test_01_create_persons_and_groups():
                 assert len(group.persons) == 2
             else:
                 assert len(group.persons) == 1
+
+
+def test_02_create_person_and_deals():
+    engine = create_engine()
+    with Session(bind=engine) as session:
+        john = create_person(session, first_name="John", last_name="Smith")
+        deal1 = create_deal(session, "test_deal", john, datetime(year=2026, month=1,day=17, hour=17,minute=0,second=0), 4, 10, 50)
+
+        assert 0 == len(john.groups)
+        assert 1 == len(john.deals)
+
+        assert (
+            "Person(id=1, first_name='John', last_name='Smith', groups=0, deals=1)"
+            == f"{john}"
+        )
+        assert (
+            "Deal(id=1, person='1:John Smith', date_time='2026-01-17 17:00:00', description='test_deal', quantity=4, price=10.50)" == f"{deal1}"
+        )
