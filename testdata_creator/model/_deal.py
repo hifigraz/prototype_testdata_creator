@@ -32,4 +32,4 @@ class Deal(Base):
 
     @override
     def __repr__(self) -> str:
-        return f"Deal(id={self.id!r}, person='{self.person.id}:{self.person.first_name} {self.person.last_name}', date_time='{self.date_time}', description={self.description!r}, quantity={self.quantity!r}, price={self.price_euro!r}.{self.price_cent!r})"
+        return f"Deal(id={self.id!r}, person='{self.person.id}:{self.person.first_name} {self.person.last_name}', date_time='{self.date_time}', description={self.description!r}, quantity={self.quantity!r}, price={self.price_euro!r}.{self.price_cent!r:0>2})"
