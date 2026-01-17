@@ -19,7 +19,9 @@ class Deal(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     person_id: Mapped[int] = mapped_column(ForeignKey("person.id"), nullable=False)
 
-    date_time: Mapped[datetime] = mapped_column(DateTime(True), server_default=func.now())
+    date_time: Mapped[datetime] = mapped_column(
+        DateTime(True), server_default=func.now()
+    )
 
     description: Mapped[str] = mapped_column(String(30))
     price_cent: Mapped[int] = mapped_column(

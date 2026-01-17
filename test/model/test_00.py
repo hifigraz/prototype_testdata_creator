@@ -58,8 +58,9 @@ def test_02_deals() -> None:
     deal_1.person = person_1
     deal_1.description = "description"
 
-    assert "Deal(id=1, person='1:Jane Doe', date_time='None', description='description', quantity=5, price=10.50)" == repr(
-        deal_1
+    assert (
+        "Deal(id=1, person='1:Jane Doe', date_time='None', description='description', quantity=5, price=10.50)"
+        == repr(deal_1)
     )
     assert (
         "Person(id=1, first_name='Jane', last_name='Doe', groups=0, deals=1)"

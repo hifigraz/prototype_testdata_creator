@@ -58,7 +58,15 @@ def test_02_create_person_and_deals():
     engine = create_engine()
     with Session(bind=engine) as session:
         john = create_person(session, first_name="John", last_name="Smith")
-        deal1 = create_deal(session, "test_deal", john, datetime(year=2026, month=1,day=17, hour=17,minute=0,second=0), 4, 10, 50)
+        deal1 = create_deal(
+            session,
+            "test_deal",
+            john,
+            datetime(year=2026, month=1, day=17, hour=17, minute=0, second=0),
+            4,
+            10,
+            50,
+        )
 
         assert 0 == len(john.groups)
         assert 1 == len(john.deals)
@@ -68,5 +76,6 @@ def test_02_create_person_and_deals():
             == f"{john}"
         )
         assert (
-            "Deal(id=1, person='1:John Smith', date_time='2026-01-17 17:00:00', description='test_deal', quantity=4, price=10.50)" == f"{deal1}"
+            "Deal(id=1, person='1:John Smith', date_time='2026-01-17 17:00:00', description='test_deal', quantity=4, price=10.50)"
+            == f"{deal1}"
         )
