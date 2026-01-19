@@ -1,7 +1,7 @@
 import logging
 
 logging.basicConfig(
-    format="%(ascttime)s %(level)s %(message)s", encoding="utf-8", level=logging.DEBUG
+    format="%(asctime)s %(levelname)s %(message)s", encoding="utf-8", level=logging.DEBUG
 )
 
 

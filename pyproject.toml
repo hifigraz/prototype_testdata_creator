@@ -38,6 +38,7 @@ dependencies = [
 [project.scripts]
 testdata_creator_test = "testdata_creator.utils:test"
 data_generator = "testdata_creator.utils:generator_main"
+testdata_creator = "testdata_creator.utils:testdata_creator"
 
 [project.urls]
 "Homepage" = "https://testdata_creator.com"

@@ -15,7 +15,7 @@ class PersonGroupAssociation(Base):
         ForeignKey(column="person.id"), primary_key=True, nullable=False
     )
     group_id: Mapped[int] = mapped_column(
-        ForeignKey(column="group.id"), primary_key=True, nullable=False
+        ForeignKey(column="group_table.id"), primary_key=True, nullable=False
     )
     person: Mapped["Person"] = relationship(back_populates="group_associations")
     group: Mapped["Group"] = relationship(back_populates="person_associations")
@@ -46,7 +46,7 @@ class Person(Base):
 
 
 class Group(Base):
-    __tablename__: str = "group"
+    __tablename__: str = "group_table"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(length=30))
