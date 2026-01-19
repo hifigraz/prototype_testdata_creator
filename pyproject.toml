@@ -32,7 +32,7 @@ classifiers = [
 dependencies = [
   "sqlalchemy",
   "faker",
-
+  "psycopg2-binary>=2.9",
 ]
 
 [project.scripts]

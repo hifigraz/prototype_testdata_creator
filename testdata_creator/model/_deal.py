@@ -23,7 +23,7 @@ class Deal(Base):
         DateTime(True), server_default=func.now()
     )
 
-    description: Mapped[str] = mapped_column(String(30))
+    description: Mapped[str] = mapped_column(String(150))
     price_cent: Mapped[int] = mapped_column(
         CheckConstraint("price_cent BETWEEN 0 and 99")
     )
